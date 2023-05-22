@@ -43,7 +43,7 @@ extension ChatViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: K.messageIdentifer, for: indexPath) as! MessagesCell
         cell.message.text = message[indexPath.row].message
-        cell.messageButton.layer.cornerRadius = cell.messageButton.frame.size.height / 5
+        cell.messageButton.layer.cornerRadius = 10
         
         return cell
     }
