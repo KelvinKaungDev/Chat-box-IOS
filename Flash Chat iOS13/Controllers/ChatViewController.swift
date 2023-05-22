@@ -1,11 +1,3 @@
-//
-//  ChatViewController.swift
-//  Flash Chat iOS13
-//
-//  Created by Angela Yu on 21/10/2019.
-//  Copyright © 2019 Angela Yu. All rights reserved.
-//
-
 import UIKit
 import FirebaseAuth
 
@@ -26,6 +18,7 @@ class ChatViewController: UIViewController {
         super.viewDidLoad()
         self.navigationItem.setHidesBackButton(true, animated: true)
 
+        tableView.register(UINib(nibName: K.nibName, bundle: nil), forCellReuseIdentifier: K.messageIdentifer)
     }
     
     @IBAction func logout(_ sender: UIBarButtonItem) {
@@ -48,8 +41,9 @@ extension ChatViewController : UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: K.messageIdentifer, for: indexPath)
-        cell.textLabel!.text = message[indexPath.row].message
+        let cell = tableView.dequeueReusableCell(withIdentifier: K.messageIdentifer, for: indexPath) as! MessagesCell
+        cell.message.text = message[indexPath.row].message
+        cell.messageButton.layer.cornerRadius = cell.messageButton.frame.size.height / 5
         
         return cell
     }

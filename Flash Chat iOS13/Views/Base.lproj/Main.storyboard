@@ -169,7 +169,7 @@
                     <connections>
                         <outlet property="emailTextfield" destination="u72-XV-6FN" id="Nfc-8N-TNr"/>
                         <outlet property="passwordTextfield" destination="hLb-P9-NkF" id="uaM-fo-m8M"/>
-                        <segue destination="lwd-AH-u8E" kind="show" identifier="RegisterToView" id="0gc-qv-XET"/>
+                        <segue destination="lwd-AH-u8E" kind="show" identifier="RegisterToChat" id="M5W-gw-vVe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -264,7 +264,7 @@
                     <connections>
                         <outlet property="emailTextfield" destination="F21-w0-z4z" id="YUG-Hl-Rxj"/>
                         <outlet property="passwordTextfield" destination="abR-gz-opL" id="xCU-X2-hrx"/>
-                        <segue destination="lwd-AH-u8E" kind="show" identifier="LoginToView" id="q00-xM-D23"/>
+                        <segue destination="lwd-AH-u8E" kind="show" identifier="LoginToChat" id="q00-xM-D23"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XcE-Gk-YZg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -282,16 +282,6 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="S6L-hg-cne">
                                 <rect key="frame" x="0.0" y="92" width="414" height="710"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ReusableCell" id="fAI-uC-s9a">
-                                        <rect key="frame" x="0.0" y="50" width="414" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fAI-uC-s9a" id="X3e-Th-Y6O">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xlo-0G-XA6">
                                 <rect key="frame" x="0.0" y="802" width="414" height="60"/>
@@ -379,7 +369,9 @@
         </scene>
     </scenes>
     <designables>
-        <designable name="y7D-jv-BlJ"/>
+        <designable name="y7D-jv-BlJ">
+            <size key="intrinsicContentSize" width="248.5" height="48"/>
+        </designable>
     </designables>
     <inferredMetricsTieBreakers>
         <segue reference="q00-xM-D23"/>
