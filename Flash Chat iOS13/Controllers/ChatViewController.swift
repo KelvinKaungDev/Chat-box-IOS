@@ -1,6 +1,7 @@
 import UIKit
+import SwiftUI
 import FirebaseAuth
-import Firebase
+import FirebaseFirestore
 
 class ChatViewController: UIViewController {
 
@@ -9,7 +10,7 @@ class ChatViewController: UIViewController {
     
     let db = Firestore.firestore()
     
-    var message : [Message] = [
+    var messages : [Message] = [
         Message(name: "Kelvin", message: "Hi"),
         Message(name: "Kaung", message: "Hey"),
         Message(name: "Willian", message: "How are you?")
@@ -22,6 +23,23 @@ class ChatViewController: UIViewController {
         self.navigationItem.setHidesBackButton(true, animated: true)
 
         tableView.register(UINib(nibName: K.nibName, bundle: nil), forCellReuseIdentifier: K.messageIdentifer)
+        
+        loadMessage()
+    }
+
+    func loadMessage() {
+        db.collection(K.FireBase.collectionName).getDocuments { querySnapShot, error in
+            if error != nil {
+                print("error")
+            } else {
+                let data = querySnapShot?.documents
+                if let documents = data {
+                    for document in documents {
+                        print(document.data())
+                    }
+                }
+            }
+        }
     }
     
     @IBAction func logout(_ sender: UIBarButtonItem) {
@@ -52,12 +70,12 @@ class ChatViewController: UIViewController {
 
 extension ChatViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return message.count
+        return messages.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: K.messageIdentifer, for: indexPath) as! MessagesCell
-        cell.message.text = message[indexPath.row].message
+        cell.message.text = messages[indexPath.row].message
         cell.messageButton.layer.cornerRadius = 10
         
         return cell
