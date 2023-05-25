@@ -1,10 +1,13 @@
 import UIKit
 import FirebaseAuth
+import Firebase
 
 class ChatViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var messageTextfield: UITextField!
+    
+    let db = Firestore.firestore()
     
     var message : [Message] = [
         Message(name: "Kelvin", message: "Hi"),
@@ -31,7 +34,19 @@ class ChatViewController: UIViewController {
     }
     
     @IBAction func sendPressed(_ sender: UIButton) {
-        
+
+        if let messageSender = Auth.auth().currentUser?.email, let messageBody = messageTextfield.text {
+            db.collection(K.FireBase.collectionName).addDocument(data: [
+                  K.FireBase.sender : messageSender,
+                  K.FireBase.body : messageBody
+              ]) { err in
+                  if let err = err {
+                      print("Error adding document: \(err)")
+                  } else {
+                      print("Successfully")
+                  }
+              }
+        }
     }
 }
 
