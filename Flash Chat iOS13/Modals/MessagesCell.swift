@@ -2,6 +2,7 @@ import UIKit
 
 class MessagesCell: UITableViewCell {
 
+    @IBOutlet var customerImage: UIImageView!
     @IBOutlet var userImage: UIImageView!
     @IBOutlet var message: UILabel!
     @IBOutlet var messageButton: UIView!

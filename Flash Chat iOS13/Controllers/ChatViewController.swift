@@ -10,11 +10,7 @@ class ChatViewController: UIViewController {
     
     let db = Firestore.firestore()
     
-    var messages : [Message] = [
-        Message(name: "Kelvin", message: "Hi"),
-        Message(name: "Kaung", message: "Hey"),
-        Message(name: "Willian", message: "How are you?")
-    ]
+    var messages : [Message] = []
     
     override func viewDidLoad() {
         
@@ -28,14 +24,25 @@ class ChatViewController: UIViewController {
     }
 
     func loadMessage() {
-        db.collection(K.FireBase.collectionName).getDocuments { querySnapShot, error in
+
+        db.collection(K.FireBase.collectionName).order(by: K.FireBase.date).addSnapshotListener  { querySnapShot, error in
+            self.messages = []
+
             if error != nil {
                 print("error")
             } else {
                 let data = querySnapShot?.documents
                 if let documents = data {
                     for document in documents {
-                        print(document.data())
+                        let data = document.data()
+                        let sender = data[K.FireBase.sender] as! String
+                        let body = data[K.FireBase.body] as! String
+                        
+                        self.messages.append(Message(name: sender, message: body))
+                        
+                        DispatchQueue.main.async {
+                            self.tableView.reloadData()
+                        }
                     }
                 }
             }
@@ -56,12 +63,14 @@ class ChatViewController: UIViewController {
         if let messageSender = Auth.auth().currentUser?.email, let messageBody = messageTextfield.text {
             db.collection(K.FireBase.collectionName).addDocument(data: [
                   K.FireBase.sender : messageSender,
-                  K.FireBase.body : messageBody
+                  K.FireBase.body : messageBody,
+                  K.FireBase.date : Date().timeIntervalSince1970
               ]) { err in
                   if let err = err {
                       print("Error adding document: \(err)")
                   } else {
                       print("Successfully")
+                      self.messageTextfield.text = ""
                   }
               }
         }
@@ -77,6 +86,14 @@ extension ChatViewController : UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: K.messageIdentifer, for: indexPath) as! MessagesCell
         cell.message.text = messages[indexPath.row].message
         cell.messageButton.layer.cornerRadius = 10
+        
+        if messages[indexPath.row].name == Auth.auth().currentUser?.email {
+            cell.customerImage.isHidden = true
+            cell.userImage.isHidden = false
+        } else {
+            cell.customerImage.isHidden = false
+            cell.userImage.isHidden = true
+        }
         
         return cell
     }

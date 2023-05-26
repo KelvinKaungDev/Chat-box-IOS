@@ -10,5 +10,6 @@ struct K {
         static var collectionName = "messages"
         static var sender = "sender"
         static var body = "body"
+        static var date = "date"
     }
 }
